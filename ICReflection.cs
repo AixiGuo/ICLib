@@ -36,6 +36,36 @@ namespace ICLib
             return result;
         }
 
+        //Get list of Attributes  得到修饰
+        public static List<Attribute> Attributes(this MemberInfo mem,Type findAttr=null)
+        {
+            List<Attribute> result = new List<Attribute>();
+            Type find = typeof(Attribute);
+            if (findAttr != null)
+            {
+                find = findAttr;
+            }
+            foreach (var one in mem.GetCustomAttributes(find))
+            {
+                result.Add(one);
+            }
+            return result;
+        }
+
+        public static T GetFieldValue<T>(this object target, string fieldName )
+        {
+            Type type = target.GetType();
+            var field = type.GetField(fieldName);
+            if(field == null)
+            {
+                throw new Exception("No field:" + fieldName);
+            }
+            else
+            {
+                var value = (T) Convert.ChangeType(field.GetValue(target),typeof(T)); 
+                return value;
+            }
+        }
 
     }
 
