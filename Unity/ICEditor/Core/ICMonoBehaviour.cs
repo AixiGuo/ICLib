@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ICLib.ICEditor
+public class ICMonoBehaviour : MonoBehaviour
 {
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
-public class ICMonoBehaviour:MonoBehaviour  
-{
-    
-}
-
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

@@ -1,9 +1,10 @@
-﻿ 
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ICMagic
+namespace ICLib.ICEditor
 {
 
     //确定元素位置rect
@@ -101,7 +102,15 @@ namespace ICMagic
      
     }
 
-     
+
+    public class ICAOffset : Attribute
+    {
+        public Rect offset;
+        public ICAOffset(int x, int y, int width, int height)
+        {
+            offset = new Rect(x, y, width, height);
+        }
+    }
 
     //从右向左
     public class zToRight : ICComRect
@@ -137,6 +146,18 @@ namespace ICMagic
             return rect;
         }
     }
+    public class ICAToRight : Attribute
+    {
+        public zToRight pos;
+        public ICAToRight(float height, float width,
+           bool firstOne = false,
+           bool nextLine = false,
+           bool nextCol = true)
+        {
+            pos = new zToRight(height, width, firstOne, nextLine, nextCol);
+        }
+    }
+
 
     //向右排布
     public class zToLeft : ICComRect
@@ -171,10 +192,22 @@ namespace ICMagic
         }
     }
 
+    public class ICAToLeft : Attribute
+    {
+        public zToLeft pos;
+        public ICAToLeft(float height, float width,
+            bool firstOne = false,
+            bool nextLine = false,
+            bool nextCol = true)
+        {
+            pos = new zToLeft(height, width, firstOne, nextLine, nextCol);
+        }
+    }
+
     //一行的布局
     public class zOneline : ICComRect
     { 
-        public zOneline(float height = 16, bool nextLine = true)
+        public zOneline(float height = 20, bool nextLine = true)
         {
             this.height = height;
             this.nextLine = nextLine;
@@ -195,6 +228,14 @@ namespace ICMagic
 
         }
     }
+    public class ICAOneLine : Attribute
+    {
+        public zOneline pos;
+        public ICAOneLine(float height = 20, bool nextLine = true)
+        {
+            pos = new zOneline(height, nextLine);
+        }
+    }
 
     //一行分割  最后一个应该让 finish 为true
     public class zSpeOneline : zOneline
@@ -202,7 +243,7 @@ namespace ICMagic
         public float columes = 0;
         public float colAt = 0;
 
-        public zSpeOneline(float colAt, float columes, bool nextLine = false, float height = 16)
+        public zSpeOneline(float colAt, float columes, bool nextLine = false, float height = 17)
             : base(height, nextLine)
         {
             this.colAt = colAt;
@@ -221,6 +262,14 @@ namespace ICMagic
 
             UpdateAndMoveDown(height);
             return rect;
+        }
+    } 
+    public class ICASpeOneline : Attribute
+    {
+        public zSpeOneline pos;
+        public ICASpeOneline(float colAt, float columes, bool nextLine = false, float height = 17)
+        {
+            pos = new zSpeOneline(colAt, columes, nextLine, height);
         }
     }
 
@@ -251,6 +300,15 @@ namespace ICMagic
         public override Rect CalculateRect()
         {
             return layout.field;
+        }
+    }
+
+    public class ICAFullCompoment : Attribute
+    {
+        public zFullCompoment pos;
+        public ICAFullCompoment()
+        {
+            pos = new zFullCompoment();
         }
     }
 }

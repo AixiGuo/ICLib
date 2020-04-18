@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine; 
 using System;
 using System.Dynamic;
+using UnityEngine.UI;
 
-namespace ICMagic
+namespace ICLib.ICEditor
 {
 	[System.Serializable]
     public class ICLayout
@@ -23,11 +24,13 @@ namespace ICMagic
 
 		#region Init
 
-		public void InitInspector(int margin=0)
+		public void InitInspector(int margin=1)
 		{
 			cursor = new Rect();
 			this.margin = margin;
 			field = ICEditorFunc.GetInspectorRect();
+			 
+			ICEditorFunc.CheckStyles();
 		}
 
 		#endregion
@@ -210,19 +213,48 @@ namespace ICMagic
 		public void FloatField(ref float value, ICComRect position,
 			string label = "", string tooltip = "Float Value", GUIStyle style = null)
 		{
-			Icon(new zSpeOneline(1, 4, false, position.height) { offset = new Rect(2,1,0,0)}
-			, "ICMagic_Slider",IconAligment.max,IconAligment.center);
-
+			//Icon(new zSpeOneline(1, 4, false, position.height) { offset = new Rect(2,1,0,0)}
+			//, "ICMagic_Slider",IconAligment.max,IconAligment.center);
 			Com_Init(position, label, tooltip, style, ICEditorFunc.InputTextStyle);
 #if UNITY_EDITOR
+			var texture = ICEditorFunc.GetIcon("ICMagic_Slider");
+			var iconRect = com_rect.SplitRectHorizontal(1, 2).Move(-texture.width,2);
+			iconRect.height = texture.height; iconRect.width = texture.width;
+			GUI.DrawTexture(ToDisplay(iconRect), texture, ScaleMode.ScaleAndCrop);
+
+
 			UnityEditor.EditorGUIUtility.labelWidth= com_rect.width/2 ;
 			 value = UnityEditor.EditorGUI. FloatField(com_rect," ", value, com_style);
 			UnityEditor.EditorGUIUtility.labelWidth = 0;
 			
 
-			Style_Init(ICEditorFunc.labelStyle);  
+			Style_Init(ICEditorFunc.labelStyle);
+			com_style.alignment = TextAnchor.UpperLeft;
 			GUI.Label(com_rect, com_content, com_style);
 			 
+#endif
+		}
+		//Int Input
+		public void IntField(ref int value, ICComRect position,
+			string label = "", string tooltip = "Float Value", GUIStyle style = null)
+		{
+			Com_Init(position, label, tooltip, style, ICEditorFunc.InputTextStyle);
+#if UNITY_EDITOR
+			var texture = ICEditorFunc.GetIcon("ICMagic_Slider");
+			var iconRect = com_rect.SplitRectHorizontal(1, 2).Move(-texture.width, 2);
+			iconRect.height = texture.height; iconRect.width = texture.width;
+			GUI.DrawTexture(ToDisplay(iconRect), texture, ScaleMode.ScaleAndCrop);
+
+
+			UnityEditor.EditorGUIUtility.labelWidth = com_rect.width / 2;
+			value = UnityEditor.EditorGUI.IntField(com_rect, " ", value, com_style);
+			UnityEditor.EditorGUIUtility.labelWidth = 0;
+
+
+			Style_Init(ICEditorFunc.labelStyle);
+			com_style.alignment = TextAnchor.UpperLeft;
+			GUI.Label(com_rect, com_content, com_style);
+
 #endif
 		}
 

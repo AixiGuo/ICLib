@@ -50,7 +50,13 @@ public class MyClass
 }
 
 ```
+* ICField
 
+Get value:
+
+```csharp
+field.GetVariable<T>();
+```
 
 ## Extensions
 1. Get list of all public members of class

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 
-namespace ICMagic
+namespace ICLib.ICEditor
 {
 
     public class ICEditorFunc

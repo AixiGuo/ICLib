@@ -128,6 +128,12 @@ namespace ICLib
             }
         }
 
+        public T GetVariable<T>()
+        {
+            UpdataVariableValue();
+            return (T)Convert.ChangeType(fieldValue, typeof(T));
+        }
+
         public void MethodInvoke(object[] pars)
         {
             if (type == ICFieldType.Method)
@@ -223,8 +229,7 @@ namespace ICLib
             }
             else
             {
-                v.UpdataVariableValue();
-                return (T)Convert.ChangeType(v.fieldValue, typeof(T));
+                return v.GetVariable<T>();
             }
         }
         public void SetVariable(string name , object value)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace ICMagic
+namespace ICLib.ICEditor
 {
 
  static public class ICExtensions 
@@ -37,7 +37,8 @@ namespace ICMagic
 				}
 				return default(TValue);
 			}
-		 
+
+		#region Rect
 
 		//水平分割矩形
 		public static Rect SplitRectHorizontal(this Rect r,float i,float all)
@@ -51,7 +52,13 @@ namespace ICMagic
 
 			return newRect;
 		}
-
+		public static Rect Move(this Rect r, float x, float y)
+		{
+			var newRect = new Rect();
+			newRect.x = r.x + x;newRect.y = r.y + y;
+			return newRect;
+		}
+		#endregion
 		public static Keyframe[] Copy(this Keyframe[] src)
 		{
 			Keyframe[] dst = new Keyframe[src.Length];
